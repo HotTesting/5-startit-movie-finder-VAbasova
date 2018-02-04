@@ -20,7 +20,7 @@ describe('Movie card ', async function(){
         expect(await movieCardRitingPointer.isDisplayed()).toBe(true);
     }) 
 
-    fit('should open appropriate "movie details" page, after click on "name" field', async function(){
+    it('should open appropriate "movie details" page, after click on "name" field', async function(){
         await browser.get('/');
 
         let movieCardTitle = $$('movie-card').first().$('.text-ellipsis a');
