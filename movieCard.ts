@@ -1,4 +1,5 @@
-import { browser, $, $$, element, by} from 'protractor'
+import { browser, $, $$, element, by} from 'protractor';
+import { expect } from 'chai';
 
 describe('Movie card ', async function(){
     
@@ -8,7 +9,7 @@ describe('Movie card ', async function(){
         await browser.get('/');
         
         //Verify that the name of movie card is displayed
-        expect(await movieCardTitle.isDisplayed()).toBe(true);
+        expect(await movieCardTitle.isDisplayed()).to.be.true;
     })
 
     it('should have "raiting" pointer', async function(){
@@ -17,7 +18,7 @@ describe('Movie card ', async function(){
         await browser.get('/');
         
         //Verify that the "raiting" pointer' movie card is displayed
-        expect(await movieCardRitingPointer.isDisplayed()).toBe(true);
+        expect(await movieCardRitingPointer.isDisplayed()).to.be.true;
     }) 
 
     it('should open appropriate "movie details" page, after click on "name" field', async function(){
@@ -29,6 +30,6 @@ describe('Movie card ', async function(){
         await movieCardTitle.click(); 
 
         //Verify that after click on "name" field url changes to movie card href value
-        expect(await browser.getCurrentUrl()).toEqual(movieCardHref); 
+        expect(await browser.getCurrentUrl()).to.equal(movieCardHref); 
     })
 })

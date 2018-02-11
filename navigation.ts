@@ -1,4 +1,5 @@
-import { browser, $, $$, element, by} from 'protractor'
+import { browser, $, $$, element, by} from 'protractor';
+import { expect } from 'chai';
 
 describe('Navigation ',async function() {
     
@@ -13,8 +14,8 @@ describe('Navigation ',async function() {
         await browser.sleep(1000);
 
         //Verify that after click on upcomingMoviesSectionNavigatonButton url changes to '/upcoming'
-        expect(await browser.getCurrentUrl()).toEqual(UPCOMING_MOVIES_SECTION_LINK); 
-        expect(await sectionHeader.getText()).toEqual(UPCOMING_MOVIES_SECTION_HEDER);
+        expect(await browser.getCurrentUrl()).to.equal(UPCOMING_MOVIES_SECTION_LINK); 
+        expect(await sectionHeader.getText()).to.equal(UPCOMING_MOVIES_SECTION_HEDER);
     })
 
     it('should open "Popular Series" section', async function(){
@@ -28,8 +29,8 @@ describe('Navigation ',async function() {
         await browser.sleep(1000);
 
         //Verify that after click on popularSeriesSectionNavigatonButton url changes to '/popular/series'
-        expect(await browser.getCurrentUrl()).toEqual(POPULAR_SERIES_SECTION_LINK);
-        expect(await sectionHeader.getText()).toEqual(POPULAR_SERIES_SECTION_HEDER);
+        expect(await browser.getCurrentUrl()).to.equal(POPULAR_SERIES_SECTION_LINK);
+        expect(await sectionHeader.getText()).to.equal(POPULAR_SERIES_SECTION_HEDER);
     })
 
     it('should open "Action" category', async function(){
@@ -43,7 +44,7 @@ describe('Navigation ',async function() {
         await browser.sleep(1000);
 
         //Verify that after click on actionCategoryMoviesCategory url changes to '/Action'
-        expect(await browser.getCurrentUrl()).toContain(ACTION_CATEGORY_LINK_ENDING);
-        expect(await sectionHeader.getText()).toEqual(ACTION_CATEGORY_SECTION_HEDER);
+        expect(await browser.getCurrentUrl()).to.contain(ACTION_CATEGORY_LINK_ENDING);
+        expect(await sectionHeader.getText()).to.equal(ACTION_CATEGORY_SECTION_HEDER);
     })
 })

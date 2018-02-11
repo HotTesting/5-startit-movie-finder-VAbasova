@@ -1,6 +1,7 @@
 import { browser, $, $$, element, by, Key, ExpectedConditions} from 'protractor'
 import { async } from 'q';
 import { until } from 'selenium-webdriver';
+import { expect } from 'chai';
 
 describe('Search ', async function(){
 
@@ -14,7 +15,7 @@ describe('Search ', async function(){
         await browser.sleep(1000); // Whaiting for search finished
 
         /* Verify that after search applyed first movie card changes to the value we are searching */
-        expect(await $$('movie-card').first().$('.text-ellipsis [title]').getText()).toEqual(existingMovieTitleForSearch);
+        expect(await $$('movie-card').first().$('.text-ellipsis [title]').getText()).to.equal(existingMovieTitleForSearch);
     })
 
     it('results(all of them) should contain serach request', async function(){
@@ -38,10 +39,10 @@ describe('Search ', async function(){
         let index;
 
         for (index = 0; index < await foundMovieTitles.count(); index++) {
-            expect(await foundMovieTitles.get(index).getAttribute('title')).toContain(SEARCH_REQUEST)
+            expect(await foundMovieTitles.get(index).getAttribute('title')).to.contain(SEARCH_REQUEST)
         };
 
-        expect(index).toBe(20, "must be 20 search results");
+        expect(index).to.equal(20, "must be 20 search results");
     })
 
     it('result should be empty, after request for nonexistent movie', async function(){
@@ -55,6 +56,6 @@ describe('Search ', async function(){
 
         let foundMovieTitles = $$('movies > div > div.row.is-flex movie-card a[title]');
 
-        expect(await foundMovieTitles.count()).toBe(0);
+        expect(await foundMovieTitles.count()).to.equal(0);
     })
 })
