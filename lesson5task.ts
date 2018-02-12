@@ -37,7 +37,7 @@ describe('Movie details', async function () {
         await movieCardTitle.click();
         await browser.wait(EC.visibilityOf(similarMovies.last()), 20000, 'similar movies should appear in 20 seconds, but it doesnt');
         
-        expect(await similarMovies).not.to.be.empty;
+        expect(await similarMovies.count()).to.be.above(0, 'there is no movies in simular movies block');
         console.log('there is ', await similarMovies.count(),' simular movies');
     })
 
@@ -49,9 +49,9 @@ describe('Movie details', async function () {
         it('should show atleast one actor', async function () {
             let actors = $$('app-movie > div > div.col-md-8 > div > div.col-md-3');
         
-            await browser.wait(EC.visibilityOf(actors.last()), 20000, 'similar movies should appear in 20 seconds, but it doesnt');
+            await browser.wait(EC.visibilityOf(actors.last()), 20000, 'actors should appear in 20 seconds, but it doesnt');
         
-            expect(await actors).not.to.be.empty;
+            expect(await actors.count()).to.be.above(0, 'there is no actors in cast block');
             console.log(await actors.count() + ' actors shows');     
         })
     })
@@ -61,12 +61,13 @@ describe('Movie details', async function () {
             let movieCardTitle = $$('movie-card').first().$('.text-ellipsis a');  
             await movieCardTitle.click();  
         })
+
         it('should be atleast one review', async function () {
             let reviews = $$('app-movie > div > div.col-md-6');
         
-            await browser.wait(EC.visibilityOf(reviews.last()), 20000, 'similar movies should appear in 20 seconds, but it doesnt');
+            await browser.wait(EC.visibilityOf(reviews.last()), 20000, 'reviews should appear in 20 seconds, but it doesnt');
         
-            expect(await reviews).not.to.be.empty;
+            expect(await reviews.count()).to.be.above(0, 'there is no reviews in reviews block');
             console.log('there is ', await reviews.count(),' reviews');   
         })
 
@@ -78,7 +79,7 @@ describe('Movie details', async function () {
             
             let reviewSourceLinks: any = await reviewSources.getAttribute('href')
             reviewSourceLinks.forEach(sourceLink => {
-                expect(sourceLink).not.to.contain('THIS_SITE_LINK');
+                expect(sourceLink).not.to.contain(THIS_SITE_LINK);
                 console.log(sourceLink);
             })
         })

@@ -7,7 +7,7 @@ module.exports.config = {
     capabilities: { 
         browserName: 'chrome', 
         enableVNC: true,
-        name: "YOUR NAME HERE" // Just to identify your session between others on selenoid ui
+        name: "Valery" // Just to identify your session between others on selenoid ui
         },
     framework: 'mocha',
     mochaOpts: {
