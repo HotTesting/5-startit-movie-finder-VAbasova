@@ -1,61 +1,37 @@
-import { browser, $, $$, element, by, Key, ExpectedConditions} from 'protractor'
+import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protractor'
 import { async } from 'q';
-import { until } from 'selenium-webdriver';
+import { HomePage } from './pages/home';
 import { expect } from 'chai';
 
 describe('Search ', async function(){
+    const homePage = new HomePage();
+   
+    beforeEach(async function(){
+        await homePage.open();     
+    })
 
-    it('by exisiting name, should show first movie with complete name match', async function(){
-        await browser.get('/');
-        
+    it('by exisiting name, should show first movie with complete name match', async function(){           
         let existingMovieTitleForSearch = await $$('movie-card').last().$('.text-ellipsis [title]').getText();
-        let searchField = $('input[name="searchStr"]');
-
-        await searchField.sendKeys(existingMovieTitleForSearch, Key.ENTER);
-        await browser.sleep(1000); // Whaiting for search finished
-
+                
+        await homePage.searchFor(existingMovieTitleForSearch);   
         /* Verify that after search applyed first movie card changes to the value we are searching */
         expect(await $$('movie-card').first().$('.text-ellipsis [title]').getText()).to.equal(existingMovieTitleForSearch);
     })
 
     it('results(all of them) should contain serach request', async function(){
-
-        await browser.get('/', 1000);
-        
         const SEARCH_REQUEST = 'Dreams';
-        let searchField = $('input[name="searchStr"]');
-
-        await searchField.sendKeys(SEARCH_REQUEST, Key.ENTER);
-        await browser.wait(until.elementLocated(by.css('movies > div > div.row.is-flex > div:nth-child(20)')), 5000, 'must be 20 search results');
-
-        // Works unstable, from time to time crashes with error: Failed: ECONNREFUSED connect ECONNREFUSED 127.0.0.1:59437 
-        //
-        // await $$('movies > div > div.row.is-flex movie-card a[title]')
-        //        .each(async(elem, index) => {
-        //            expect(await elem.getAttribute('title')).toContain(SEARCH_REQUEST);
-        //        });
-
-        let foundMovieTitles = $$('movies > div > div.row.is-flex movie-card a[title]');
-        let index;
-
-        for (index = 0; index < await foundMovieTitles.count(); index++) {
-            expect(await foundMovieTitles.get(index).getAttribute('title')).to.contain(SEARCH_REQUEST)
-        };
-
-        expect(index).to.equal(20, "must be 20 search results");
+        await homePage.searchFor(SEARCH_REQUEST);   
+        let titles = await homePage.getFoundMoviesTitles();
+        expect(titles.length).to.equal(20, 'Number of found movies must be 20')
+        
+        titles.forEach(title => expect(title).to.contain(SEARCH_REQUEST))      
     })
 
     it('result should be empty, after request for nonexistent movie', async function(){
-        await browser.get('/', 1000);
-
         const SEARCH_REQUEST = 'Nonexistent movie';
-        let searchField = $('input[name="searchStr"]');
+        await homePage.searchFor(SEARCH_REQUEST);   
+        let foundMovieTitles = await homePage.getFoundMoviesTitles();
 
-        await searchField.sendKeys(SEARCH_REQUEST, Key.ENTER);
-        await browser.sleep(1000); // Whaiting for search finished
-
-        let foundMovieTitles = $$('movies > div > div.row.is-flex movie-card a[title]');
-
-        expect(await foundMovieTitles.count()).to.equal(0);
+        expect(await foundMovieTitles.length).to.equal(0, 'Number of found movies must be 0');
     })
 })

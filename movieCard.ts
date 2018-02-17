@@ -1,35 +1,32 @@
 import { browser, $, $$, element, by} from 'protractor';
 import { expect } from 'chai';
+import { HomePage } from './pages/home';
+import { MovieDetailsPage } from './pages/movieDetails';
 
 describe('Movie card ', async function(){
+    const homePage = new HomePage();
+       
+    beforeEach(async function(){
+        await homePage.open();     
+    })
     
     it('should have name', async function(){
-        let movieCardTitle = $$('movie-card').first().$('.text-ellipsis [title]');
-        
-        await browser.get('/');
-        
-        //Verify that the name of movie card is displayed
-        expect(await movieCardTitle.isDisplayed()).to.be.true;
+        expect(await homePage.getMovieTitle()).to.be.a('string');
     })
 
     it('should have "raiting" pointer', async function(){
-        let movieCardRitingPointer = $$('movie-card').first().$('small');
-
-        await browser.get('/');
-        
-        //Verify that the "raiting" pointer' movie card is displayed
-        expect(await movieCardRitingPointer.isDisplayed()).to.be.true;
+        //Verify that the "raiting" pointer' movie card is a number
+        expect(await homePage.getMovieRiting()).not.to.be.NaN;
     }) 
 
     it('should open appropriate "movie details" page, after click on "name" field', async function(){
-        await browser.get('/');
-
-        let movieCardTitle = $$('movie-card').first().$('.text-ellipsis a');
-        let movieCardHref = await movieCardTitle.getAttribute('href');
+        let movieCardTitle = await homePage.getMovieTitle();
+        let movieCardHref = await homePage.getMovieHref();
         
-        await movieCardTitle.click(); 
-
-        //Verify that after click on "name" field url changes to movie card href value
+        await homePage.openMovieDetails();
+        const detailsPage = new MovieDetailsPage();
+        
         expect(await browser.getCurrentUrl()).to.equal(movieCardHref); 
+        expect(await detailsPage.getMovieDetailHeader()).to.contain(movieCardTitle);
     })
 })
