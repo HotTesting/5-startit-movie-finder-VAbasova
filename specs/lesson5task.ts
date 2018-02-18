@@ -1,8 +1,8 @@
 import { browser, $, $$, element, by, By, ExpectedConditions as EC} from 'protractor';
 import { expect } from 'chai';
 import { WSAEACCES } from 'constants';
-import { HomePage } from './pages/home';
-import { MovieDetailsPage } from './pages/movieDetails';
+import { HomePage } from '../pages/home';
+import { MovieDetailsPage } from '../pages/movieDetails';
 
 describe('Movie details', async function () {
     const homePage = new HomePage();

@@ -1,6 +1,6 @@
 import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protractor'
 import { async } from 'q';
-import { HomePage } from './pages/home';
+import { HomePage } from '../pages/home';
 import { expect } from 'chai';
 
 describe('Search ', async function(){

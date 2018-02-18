@@ -14,7 +14,7 @@ export class HomePage {
  
     async searchFor(search_request: string | number) {
         await this.searchField.sendKeys(search_request, Key.ENTER);
-        await browser.sleep(5000);
+        await browser.wait(EC.visibilityOf(this.firstMovieOnPage), 20000, 'movies should appear in 20 seconds, but it doesnt');
     }
 
     async getFoundMoviesTitles() {

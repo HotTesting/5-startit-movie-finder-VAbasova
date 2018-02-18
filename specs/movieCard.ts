@@ -1,7 +1,7 @@
 import { browser, $, $$, element, by} from 'protractor';
 import { expect } from 'chai';
-import { HomePage } from './pages/home';
-import { MovieDetailsPage } from './pages/movieDetails';
+import { HomePage } from '../pages/home';
+import { MovieDetailsPage } from '../pages/movieDetails';
 
 describe('Movie card ', async function(){
     const homePage = new HomePage();

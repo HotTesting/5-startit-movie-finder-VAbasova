@@ -34,14 +34,19 @@ describe('Navigation ',async function() {
     })
 })
 
-describe('Category navigation',async function() {
+describe.skip('Category navigation',async function() {
+    
+    beforeEach(async function () {
+        await browser.get('/');
+    })
     let categories = [ 'Action',  'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy',
         'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Science Fiction', 'TV Movie', 'Thriller', 'War', 'Western' ]
-   
+    
+        
     categories.map(category => {
         it(`should open ${encodeURI(category)} category`, async function(){
             console.log(await category); 
-            let moviesCategory = element(by.partialLinkText(category)); //$(`a[href*="/${encodeURI(category)}"]`);
+            let moviesCategory = $(`a[href*="/${encodeURI(category)}"]`);
             let sectionHeader = $('h3.orange-text');
              
             await browser.get('/');
