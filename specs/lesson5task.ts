@@ -3,8 +3,10 @@ import { expect } from 'chai';
 import { WSAEACCES } from 'constants';
 import { HomePage } from '../pages/home';
 import { MovieDetailsPage } from '../pages/movieDetails';
+import * as log4js from 'log4js';
 
 describe('Movie details', async function () {
+    const logger = log4js.getLogger('SpecLogger');
     const homePage = new HomePage();
     const detailsPage = new MovieDetailsPage();
 
@@ -16,15 +18,16 @@ describe('Movie details', async function () {
         let movieCardTitle = await homePage.getMovieTitle();      
         await homePage.openMovieDetails();
         
-        expect(await detailsPage.getMovieDetailHeader()).to.contain(movieCardTitle); 
+        expect(await detailsPage.getMovieHeader()).to.contain(movieCardTitle);
+        logger.info('the header is ', await detailsPage.getMovieHeader());  
     })
 
     it('should have raiting', async function () {  
         await homePage.openMovieDetails();
                 
         //Verify that raiting value is a number
-        expect(await detailsPage.getMovieDetilsRaiting()).not.to.be.NaN;
-        console.log('the raiting is ', await detailsPage.getMovieDetilsRaiting()); 
+        expect(await detailsPage.getMovieRaiting()).not.to.be.NaN;
+        logger.info('the raiting is ', await detailsPage.getMovieRaiting()); 
     })
 
     it('should have simular movies block with atleast one movie', async function () {
@@ -32,7 +35,7 @@ describe('Movie details', async function () {
         let similsrMoviesTitles = await detailsPage.getSimilarMoviesTitles();
                 
         expect(await similsrMoviesTitles.length).to.be.above(0, 'there is no movies in simular movies block');
-        console.log('there is ', await similsrMoviesTitles.length,' simular movies');
+        logger.info('there is '+ await similsrMoviesTitles.length +' simular movies');
     })
 
     describe('cast block', async function () {
@@ -43,7 +46,7 @@ describe('Movie details', async function () {
             let actorNames = await detailsPage.getActorNames();
                           
             expect(await actorNames.length).to.be.above(0, 'there is no actors in cast block');
-            console.log(await actorNames.length + ' actors shows');     
+            logger.info(await actorNames.length + ' actors shows');     
         })
     })
 
@@ -56,16 +59,15 @@ describe('Movie details', async function () {
             let reviews = await detailsPage.getReviewTexts();
         
             expect(await reviews.length).to.be.above(0, 'there is no reviews in reviews block');
-            console.log('there is ', await reviews.length,' reviews');   
+            logger.info('There is ', await reviews.length,' reviews');   
         })
 
         it('should have reviewer name as link to source', async function () {
-            const THIS_SITE_LINK = 'https://movies-finder';
-            
             let reviewSourceLinks = await detailsPage.getReviewSources();
+
             reviewSourceLinks.forEach(sourceLink => {
-                expect(sourceLink).not.to.contain(THIS_SITE_LINK);
-                console.log(sourceLink);
+                expect(sourceLink).not.to.contain(homePage.LINK);
+                logger.info('The reviewer source link is:', sourceLink);
             })
         })
     })

@@ -1,5 +1,9 @@
 require('ts-node').register();
 
+let log4js = require('log4js');
+log4js.setGlobalLogLevel(process.env.LOG_LEVEL || 'INfO');
+const logger = log4js.getLogger('ConfigLogger');
+
 module.exports.config = {
     specs: ['./specs/*.ts'],
     baseUrl: 'https://movies-finder.firebaseapp.com/',
