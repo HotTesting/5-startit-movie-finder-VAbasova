@@ -85,7 +85,7 @@ describe('Popular series', async function () {
         let searchBar = $('div.jumbotron');
         
         await searchBar.isDisplayed;
-        homePage.openPopularSeries()
+        await homePage.openPopularSeries()
        
         expect(await searchBar.isPresent()).to.be.false;
     })
