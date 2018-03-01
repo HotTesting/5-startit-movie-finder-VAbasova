@@ -2,6 +2,9 @@ import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protr
 import { async } from 'q';
 import * as log4js from 'log4js';
 
+/**
+ * Class contains common base page logic
+ */
 export class BasePage {
     public logger = log4js.getLogger('SpecLogger');
     
