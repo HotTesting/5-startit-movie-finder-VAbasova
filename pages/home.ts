@@ -1,14 +1,12 @@
 import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protractor'
 import { async } from 'q';
-import * as log4js from 'log4js';
-import { PopularSeries } from './popularSeries'
+import { BasePage } from './base';
+import { PopularSeries } from './popularSeries';
 import { UpcomingMovies } from './upcomingMovies';
+import { MovieDetailsPage } from './movieDetails'
 
-const logger = log4js.getLogger('SpecLogger');
-
-export class HomePage {
+export class HomePage extends BasePage {
     private firstMovieOnPage = $$('movie-card').first();
-    private searchField = $('input[name="searchStr"]');
     private foundMovies = $$('movies > div > div.row.is-flex movie-card');
     private popularSeriesSectionNavigatonButton = element(by.partialLinkText('Popular Series')); //$('a[routerlink*="popular/series"]');
     private upcomingMoviesSectionNavigatonButton = element(by.partialLinkText('Upcoming')); //$('a[routerlink*="upcoming"]');
@@ -30,43 +28,50 @@ export class HomePage {
  
     async getMovieTitle(movieLocator = this.firstMovieOnPage) {
         if (movieLocator === this.firstMovieOnPage) {
-            logger.warn("function returns title for ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
+            this.logger.warn("function returns title for ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
         }
         return await movieLocator.$('a[title]').getAttribute('title');
     }
 
     async getMovieRiting(movieLocator = this.firstMovieOnPage) {
         if (movieLocator === this.firstMovieOnPage) {
-            logger.warn("function returns raiting for ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
+            this.logger.warn("function returns raiting for ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
         }
         return parseFloat(await movieLocator.$('small').getText());
     }
 
     async getMovieHref(movieLocator = this.firstMovieOnPage) {
         if (movieLocator === this.firstMovieOnPage) {
-            logger.warn("function returns href for ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
+            this.logger.warn("function returns href for ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
         }
         return await movieLocator.$('a[title]').getAttribute('href');
     }
 
     async openMovieDetails(movieLocator = this.firstMovieOnPage) {
         if (movieLocator === this.firstMovieOnPage) {
-            logger.warn("function opens ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
+            this.logger.warn("function opens ", await movieLocator.$('a[title]').getAttribute('title'), " movie");
         }
         movieLocator.$('.text-ellipsis a').click();
-        await browser.wait(EC.visibilityOf(this.firstMovieOnPage), 20000, 'movie details page should open in 20 seconds, but it doesnt');
+        const mdPage = new MovieDetailsPage();
+        await mdPage.pageLoaded();
+
+        return mdPage;
     }   
 
     async openPopularSeries() {
         this.popularSeriesSectionNavigatonButton.click();
         const psPage = new PopularSeries();
         await psPage.pageLoaded();
+
+        return psPage;
     }
     
     async openUpcomingMovies() {
         this.upcomingMoviesSectionNavigatonButton.click();
         const umPage = new UpcomingMovies();
         await umPage.pageLoaded();
+
+        return umPage;
     }   
 }
 

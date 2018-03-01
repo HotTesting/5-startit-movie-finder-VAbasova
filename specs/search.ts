@@ -2,11 +2,9 @@ import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protr
 import { async } from 'q';
 import { HomePage } from '../pages/home';
 import { expect } from 'chai';
-import * as log4js from 'log4js';
 
 describe('Search ', async function(){
     const homePage = new HomePage();
-    const logger = log4js.getLogger('SpecLogger');
    
     beforeEach(async function(){
         await homePage.open();     

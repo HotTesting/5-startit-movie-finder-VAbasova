@@ -1,13 +1,18 @@
 import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protractor'
 import { async } from 'q';
+import { BasePage } from './base';
 
-export class MovieDetailsPage {
+export class MovieDetailsPage extends BasePage {
    private movieHeader = $('app-movie > div:nth-child(1) > div.col-md-8 > h2');
    private movieRaiting = $('app-movie h2 > small');
    private similarMovies = $$('app-movie > div.row.is-flex > div > movie-card');
    private actors = $$('app-movie > div > div.col-md-8 > div > div.col-md-3');
    private reviews = $$('app-movie blockquote');
    
+   async pageLoaded() {
+        await browser.wait(EC.visibilityOf(this.similarMovies.last()), 10000, 'movie details page should open in 10 seconds, but it doesnt');
+    }   
+
    async getMovieHeader() {
         await browser.wait(EC.visibilityOf(this.movieHeader), 10000, 'movie header should appear in 10 seconds, but it doesnt');
         return await this.movieHeader.getText();

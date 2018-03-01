@@ -1,8 +1,8 @@
 import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protractor'
 import { async } from 'q';
+import { BasePage } from './base';
 
-export class UpcomingMovies {
-    private sectionHeader = $('h3.orange-text');
+export class UpcomingMovies extends BasePage {
     private allMovies = $$('app-upcoming  movie-card');
     public SECTION_LINK = 'https://movies-finder.firebaseapp.com/upcoming';
     public SECTION_HEDER = 'Up Coming Movies';

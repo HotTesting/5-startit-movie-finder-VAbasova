@@ -1,10 +1,9 @@
 import { browser, $, $$, element, by, Key, ExpectedConditions as EC} from 'protractor'
 import { async } from 'q';
+import { BasePage } from './base';
 
-export class PopularSeries {
+export class PopularSeries extends BasePage {
    private allMovies = $$('app-popular-series > div > div > div.col-sm-6.col-md-4.col-lg-3.col-xs-6');
-   private searchField = $('input[name="searchStr"]');
-   private sectionHeader = $('h3.orange-text');
    public SECTION_LINK = 'https://movies-finder.firebaseapp.com/popular/series';
    public SECTION_HEDER = 'Popular Series';
    
