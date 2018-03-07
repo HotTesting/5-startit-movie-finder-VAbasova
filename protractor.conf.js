@@ -5,6 +5,7 @@ log4js.setGlobalLogLevel(process.env.LOG_LEVEL || 'INfO');
 const logger = log4js.getLogger('ConfigLogger');
 
 module.exports.config = {
+    
     specs: ['./specs/*.ts'],
     baseUrl: 'https://movies-finder.firebaseapp.com/',
     SELENIUM_PROMISE_MANAGER: false,
@@ -16,6 +17,6 @@ module.exports.config = {
     framework: 'mocha',
     mochaOpts: {
         timeout: 60000,
-        //reporter: 'nyan'
+        reporter: 'mocha-allure-reporter'
     }
 }
