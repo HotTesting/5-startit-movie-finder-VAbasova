@@ -1,23 +1,18 @@
 # startit_movie_finder
-Working project for startit students
+Demo project
 
+Demo project with tests that was written on tipescript using technologies protractor + mocha + chai
 
-To make sure everything works in this initial repo:
+Setup
+
+To run this project:
 - clone
 - do `npm install` in root of this repo
 - do `npm test`
-- you should see chrome browser blinking, and something like this in console:
-```
-Started
-.
+- you should see chrome browser running, and have 34 passing tests in console
 
-
-1 spec, 0 failures
-Finished in 0.009 seconds
-
-[22:55:11] I/launcher - 0 instance(s) of WebDriver still running
-[22:55:11] I/launcher - chrome #01 passed
-```
-
+Project structure
+- pages/ – directory with page objects
+- specs/ - test fies
 
 .ts files compiled to .js files automatically

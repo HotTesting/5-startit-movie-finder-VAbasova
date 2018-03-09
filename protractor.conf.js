@@ -17,6 +17,6 @@ module.exports.config = {
     framework: 'mocha',
     mochaOpts: {
         timeout: 60000,
-        reporter: 'mocha-allure-reporter'
+        //reporter: 'mocha-allure-reporter'
     }
 }

@@ -2,7 +2,7 @@
   "name": "startit-movie-finder",
   "version": "0.0.1",
   "private": true,
-  "description": "Demonstration project for students. Feburary 16",
+  "description": "Demonstration test project",
   "scripts": {
     "test": "protractor ./protractor.conf.js --directConnect=true",
     "test-travis": "protractor ./protractor.conf.js --seleniumAddress=\"http://ip-5236.sunline.net.ua:4444/wd/hub\"",
