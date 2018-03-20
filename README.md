@@ -1,4 +1,4 @@
-# startit_movie_finder
+# movie_finder_mocha_chai
 Demo project
 
 Demo project with tests that was written on tipescript using technologies protractor + mocha + chai
